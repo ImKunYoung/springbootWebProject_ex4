@@ -76,5 +76,32 @@ public class GuestBookRepositoryTests {
 
     }
 
+    /*Querydsl 테스트1 - 다중 항목 검색 테스트 - WHERE title LIKE '%1%' OR content LIKE '%1%' AND gno > '0'*/
+    @Test
+    public void testQuery2() {
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("gno").descending());
+
+        QGuestbook qGuestbook = QGuestbook.guestbook;
+
+        String keyword = "1";
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        BooleanExpression exTitle = qGuestbook.title.contains(keyword);
+
+        BooleanExpression exContent = qGuestbook.content.contains(keyword);
+
+        BooleanExpression exAll = exTitle.or(exContent);
+
+        builder.and(exAll);
+
+        builder.and(qGuestbook.gno.gt(0L));
+
+        Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
+
+        result.stream().forEach(System.out::println);
+
+    }
 
 }
