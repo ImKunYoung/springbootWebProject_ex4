@@ -9,7 +9,7 @@
 
 		<th:block th:fragment="content">
 			<h1 class="mt-4">GuestBook List Page</h1>
-
+			<!-- 컨트롤러와 화면에서의 목록 처리 -->
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -28,6 +28,25 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<!-- 목록 페이지 처리 -->
+			<ul class="pagination h-100 justify-content-center align-items-center">
+				<li class="page-item" th:if="${result.prev}">
+					<a class="page-link" href="#" tabindex="-1">Previous</a>
+				</li>
+
+				<li th:each="page: ${result.pageList}" th:class="'page-item'+${result.page==page?'active':''}">
+					<a class="page-link" href="#">
+						[[${page}]]
+					</a>
+				</li>
+
+
+				<li class="page-item" th:if="${result.next}">
+					<a class="page-link" href="#">Next</a>
+				</li>
+
+			</ul>
 		</th:block>
 	</th:block>
 </body>
