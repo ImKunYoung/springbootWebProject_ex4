@@ -8,7 +8,7 @@ import com.example.ex4_guestbook.entity.Guestbook;
 public interface GuestbookService {
     /*방명록을 등록한다*/
     Long register(GuestbookDTO dto);
-
+    /*방명록을 불러온다*/
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
 
     /*등록과 DTO 를 엔티티로 변환하기*/
