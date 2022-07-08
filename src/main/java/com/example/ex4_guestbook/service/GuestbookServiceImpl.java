@@ -27,10 +27,12 @@ public class GuestbookServiceImpl implements GuestbookService {
         log.info("DTO-------------------------------------");
         log.info(dto);
 
+        /*DTO -> ENTITY*/
         Guestbook entity = dtoToEntity(dto);
 
         log.info(entity);
 
+        /*DB INSERT*/
         repository.save(entity);
 
         return entity.getGno();
@@ -38,12 +40,13 @@ public class GuestbookServiceImpl implements GuestbookService {
 
     @Override
     public PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO) {
+        /*Pageable*/
         Pageable pageable = requestDTO.getPageable(Sort.by("gno").descending());
-
+        /*DB SELECT (IN ENTITY)*/
         Page<Guestbook> result = repository.findAll(pageable);
-
+        /*ENTITY -> DTO*/
         Function<Guestbook, GuestbookDTO> fn = (this::entityToDto);
-
+        /*RETURN ENTITY DTO LIST*/
         return new PageResultDTO<>(result, fn);
 
     }
