@@ -45,12 +45,12 @@
 
 			<!-- 수정 버튼 -->
 			<a th:href="@{/guestbook/modify(gno = ${dto.gno}, page=${requestDTO.page})}">
-				<button type="button" class="btn btn-outline-primary">Modify</button>
+				<button type="button" class="btn btn-primary">Modify</button>
 			</a>
 
 			<!-- 뒤로가기(list) 버튼-->
 			<a th:href="@{/guestbook/list(gno = ${dto.gno}, page=${requestDTO.page})}">
-				<button type="button" class="btn btn-outline-primary">List</button>
+				<button type="button" class="btn btn-info">List</button>
 			</a>
 		</th:block>
 
