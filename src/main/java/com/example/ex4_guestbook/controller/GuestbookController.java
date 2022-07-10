@@ -58,8 +58,9 @@ public class GuestbookController {
         return "redirect:/guestbook/list";
     }
 
-    /*방명록을 조회한다*/
-    @GetMapping("/read")
+    /* read - 방명록을 조회한다*/
+    /* modify - 방명록을 수정한다*/
+    @GetMapping({"/read", "/modify"})
     public void read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
 
         log.info("gno: " + gno);
