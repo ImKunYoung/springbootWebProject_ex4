@@ -78,7 +78,7 @@ public class GuestbookServiceTests {
     }
 
     @Test
-    @DisplayName("방명록을 조회한다")
+    @DisplayName("방명록을 조회/ 수정한다")
     public void testRead() {
 
         Long gno = 10L;
