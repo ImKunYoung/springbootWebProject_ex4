@@ -11,6 +11,9 @@ public interface GuestbookService {
     /*방명록을 불러온다*/
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
 
+    /*방명록을 조회한다*/
+    GuestbookDTO read(Long gno);
+
     /*등록과 DTO 를 엔티티로 변환하기*/
     default Guestbook dtoToEntity(GuestbookDTO dto) {
         Guestbook entity = Guestbook.builder()
