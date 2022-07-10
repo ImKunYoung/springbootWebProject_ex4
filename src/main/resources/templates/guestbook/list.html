@@ -8,7 +8,14 @@
 	<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
 
 		<th:block th:fragment="content">
-			<h1 class="mt-4">GuestBook List Page</h1>
+			<h1 class="mt-4">GuestBook List Page
+				<!-- 등록 페이지의 링크 처리 -->
+				<span>
+					<a th:href="@{/guestbook/register}">
+						<button type="button" class="btn btn-outline-primary">REGISTER</button>
+					</a>
+				</span>
+			</h1>
 			<!-- 컨트롤러와 화면에서의 목록 처리 -->
 			<table class="table table-striped">
 				<thead>
