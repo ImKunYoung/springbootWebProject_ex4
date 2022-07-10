@@ -77,4 +77,16 @@ public class GuestbookServiceTests {
         resultDTO.getPageList().forEach(System.out::println);
     }
 
+    @Test
+    @DisplayName("방명록을 조회한다")
+    public void testRead() {
+
+        Long gno = 10L;
+
+        GuestbookDTO guestbookDTO = service.read(gno);
+
+        System.out.println(guestbookDTO);
+
+    }
+
 }
