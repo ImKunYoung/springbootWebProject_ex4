@@ -24,7 +24,7 @@
 
 			<div class="form-group">
 				<label>Content</label>
-				<input type="text" class="form-control" name="content" th:value="${dto.content}" readonly>
+				<textarea class="form-control" rows="5" name="content" readonly>[[${dto.content}]]</textarea>
 			</div>
 
 			<div class="form-group">
@@ -46,6 +46,11 @@
 			<!-- 수정 버튼 -->
 			<a th:href="@{/guestbook/modify(gno = ${dto.gno}, page=${requestDTO.page})}">
 				<button type="button" class="btn btn-outline-primary">Modify</button>
+			</a>
+
+			<!-- 뒤로가기(list) 버튼-->
+			<a th:href="@{/guestbook/list(gno = ${dto.gno}, page=${requestDTO.page})}">
+				<button type="button" class="btn btn-outline-primary">List</button>
 			</a>
 		</th:block>
 
