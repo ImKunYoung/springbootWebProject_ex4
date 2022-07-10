@@ -47,6 +47,14 @@
 				</li>
 
 			</ul>
+
+			<!--등록된 뒤 전달되는 msg 확인-->
+			<script th:inline="javascript">
+
+				const msg = [[${msg}]];
+                console.log(msg);
+
+			</script>
 		</th:block>
 	</th:block>
 </body>
