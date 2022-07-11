@@ -71,9 +71,9 @@ public class GuestbookController {
 
     }
     
-    /*방명록을 삭제한다*/
+    /*방명록 삭제 처리*/
     @PostMapping("/remove")
-    public String remove(Long gno, RedirectAttributes redirectAttributes) {
+    public String remove(long gno, RedirectAttributes redirectAttributes) {
 
         log.info("gno: "+gno);
 
@@ -84,5 +84,23 @@ public class GuestbookController {
         return "redirect:/guestbook/list";
 
     }
+
+    /*방명록 수정 처리*/
+    @PostMapping("/modify")
+    public String modify(GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+
+        log.info("post modify.............................................");
+        log.info("dto: " + dto);
+
+        service.modify(dto);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("gno", dto.getGno());
+
+        return "redirect:/guestbook/read";
+
+    }
+
+
 
 }

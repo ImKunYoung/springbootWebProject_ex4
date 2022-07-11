@@ -13,6 +13,9 @@
 
 		<form action="/guestbook/modify" method="post">
 
+			<!--페이지 번호-->
+			<input type="hidden" name="page" th:value="${requestDTO.page}">
+
 			<!-- 방명록 내용 -->
 			<div class="form-group">
 				<label>Gno</label>
