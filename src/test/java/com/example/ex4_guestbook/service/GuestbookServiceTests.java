@@ -78,7 +78,7 @@ public class GuestbookServiceTests {
     }
 
     @Test
-    @DisplayName("방명록을 조회/ 수정한다")
+    @DisplayName("방명록을 조회")
     public void testRead() {
 
         Long gno = 10L;
@@ -86,6 +86,30 @@ public class GuestbookServiceTests {
         GuestbookDTO guestbookDTO = service.read(gno);
 
         System.out.println(guestbookDTO);
+
+    }
+
+    @Test
+    @DisplayName("방명록을 삭제한다")
+    public void testRemove() {
+
+        long gno = 10L;
+
+        service.remove(gno);
+
+    }
+
+    @Test
+    @DisplayName("방명록을 수정한다")
+    public void testModify() {
+
+        long gno = 12L;
+
+        GuestbookDTO dto = service.read(gno);
+        dto.setTitle("방명록 제목 수정 테스트");
+        dto.setContent("방명록 내용 수정 테스트");
+
+        service.modify(dto);
 
     }
 
