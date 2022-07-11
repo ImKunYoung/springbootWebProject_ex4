@@ -70,5 +70,19 @@ public class GuestbookController {
         model.addAttribute("dto", dto);
 
     }
+    
+    /*방명록을 삭제한다*/
+    @PostMapping("/remove")
+    public String remove(Long gno, RedirectAttributes redirectAttributes) {
+
+        log.info("gno: "+gno);
+
+        service.remove(gno);
+
+        redirectAttributes.addFlashAttribute("msg", gno);
+
+        return "redirect:/guestbook/list";
+
+    }
 
 }
