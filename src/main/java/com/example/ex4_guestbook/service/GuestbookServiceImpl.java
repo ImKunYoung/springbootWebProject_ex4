@@ -4,7 +4,10 @@ import com.example.ex4_guestbook.dto.GuestbookDTO;
 import com.example.ex4_guestbook.dto.PageRequestDTO;
 import com.example.ex4_guestbook.dto.PageResultDTO;
 import com.example.ex4_guestbook.entity.Guestbook;
+import com.example.ex4_guestbook.entity.QGuestbook;
 import com.example.ex4_guestbook.repository.GuestbookRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -43,12 +46,19 @@ public class GuestbookServiceImpl implements GuestbookService {
     /*방명록을 불러온다*/
     @Override
     public PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO) {
+
         /*Pageable*/
         Pageable pageable = requestDTO.getPageable(Sort.by("gno").descending());
-        /*DB SELECT (IN ENTITY)*/
-        Page<Guestbook> result = repository.findAll(pageable);
+
+        /*검색 조건 처리*/
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+
+        /*DB SELECT (IN ENTITY) (Querydsl 사용)*/
+        Page<Guestbook> result = repository.findAll(booleanBuilder, pageable);
+
         /*ENTITY -> DTO*/
         Function<Guestbook, GuestbookDTO> fn = (this::entityToDto);
+
         /*RETURN ENTITY DTO LIST*/
         return new PageResultDTO<>(result, fn);
 
@@ -89,6 +99,49 @@ public class GuestbookServiceImpl implements GuestbookService {
             repository.save(entity);
 
         }
+
+    }
+
+    /*검색 처리 1- 서버측 검색 처리*/
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO) { /*Querydsl 처리*/
+
+        String type = requestDTO.getType();
+
+        String keyword = requestDTO.getKeyword();
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        QGuestbook qGuestbook = QGuestbook.guestbook;
+
+
+        /*gno > 0 조건만 생성*/
+        BooleanExpression expression = qGuestbook.gno.gt(0L);
+
+        booleanBuilder.and(expression);
+
+        /*검색 조건이 없는 경우*/
+        if(type == null || type.trim().length() == 0) { // type.trim().length() -> type이 " " 이런 경우
+            return booleanBuilder;
+        }
+
+
+        /*검색 조건 작성*/
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+
+        if(type.contains("t")) {
+            conditionBuilder.or(qGuestbook.title.contains(keyword));
+        }
+        if(type.contains("c")) {
+            conditionBuilder.or(qGuestbook.content.contains(keyword));
+        }
+        if(type.contains("w")) {
+            conditionBuilder.or(qGuestbook.writer.contains(keyword));
+        }
+
+        /*모든 조건 통합*/
+        booleanBuilder.and(conditionBuilder);
+
+        return booleanBuilder;
 
     }
 
