@@ -113,4 +113,30 @@ public class GuestbookServiceTests {
 
     }
 
+    @Test
+    @DisplayName("검색 처리 1- 서버측 검색 처리 - 서비스")
+    public void testSearch() {
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .type("tc") // 검색 조건 t, c, w, tc, tcw..
+                .keyword("안ㄴ여하세요") // 검색 키워드
+                .build();
+
+        PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
+
+        System.out.println("PREV: " + resultDTO.isPrev());
+        System.out.println("NEXT: " + resultDTO.isNext());
+        System.out.println("TOTAL: " + resultDTO.getTotalPage());
+
+        System.out.println("-----------------------------------------------------");
+        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
+            System.out.println(guestbookDTO);
+        }
+
+        System.out.println("=====================================================");
+        resultDTO.getPageList().forEach(System.out::println);
+    }
+
 }
