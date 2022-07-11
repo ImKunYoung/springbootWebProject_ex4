@@ -4,91 +4,92 @@
 	<meta charset="UTF-8">
 	<title>Title</title>
 </head>
-<body>
-	<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
 
-		<th:block th:fragment="content">
-			<h1 class="mt-4">GuestBook List Page
-				<!-- 등록 페이지의 링크 처리 -->
-				<span>
-					<a th:href="@{/guestbook/register}">
-						<button type="button" class="btn btn-outline-primary">REGISTER</button>
-					</a>
-				</span>
-			</h1>
-			<!-- 컨트롤러와 화면에서의 목록 처리 -->
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Title</th>
-						<th>Writer</th>
-						<th>Regdate</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="dto: ${result.dtoList}">
-						<th scope="row">
-							<a th:href="@{/guestbook/read(gno = ${dto.gno}, page=${result.page})}">
-								[[${dto.gno}]]
-							</a>
-						</th>
-						<td>[[${dto.title}]]</td>
-						<td>[[${dto.writer}]]</td>
-						<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
-					</tr>
-				</tbody>
-			</table>
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
 
-			<!-- 목록 페이지 처리 -->
-			<ul class="pagination h-100 justify-content-center align-items-center">
-				<li class="page-item" th:if="${result.prev}">
-					<a class="page-link" th:href="@{/guestbook/list(page=${result.start -1})}" tabindex="-1">Previous</a>
-				</li>
+	<th:block th:fragment="content">
+		<h1 class="mt-4">GuestBook List Page
+			<!-- 등록 페이지의 링크 처리 -->
+			<span>
+				<a th:href="@{/guestbook/register}">
+					<button type="button" class="btn btn-outline-primary">REGISTER</button>
+				</a>
+			</span>
+		</h1>
+		<!-- 컨트롤러와 화면에서의 목록 처리 -->
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>Writer</th>
+					<th>Regdate</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr th:each="dto: ${result.dtoList}">
+				<th scope="row">
+					<a th:href="@{/guestbook/read(gno = ${dto.gno}, page=${result.page})}">[[${dto.gno}]]</a>
+				</th>
+				<td>[[${dto.title}]]</td>
+				<td>[[${dto.writer}]]</td>
+				<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+			</tr>
+			</tbody>
+		</table>
 
-				<li th:each="page: ${result.pageList}" th:class="'page-item'+${result.page==page?'active':''}">
-					<a class="page-link" th:href="@{/guestbook/list(page=${page})}">
-						[[${page}]]
-					</a>
-				</li>
+		<!-- 목록 페이지 처리 -->
+		<ul class="pagination h-100 justify-content-center align-items-center">
 
+			<li class="page-item" th:if="${result.prev}">
+				<a class="page-link" th:href="@{/guestbook/list(page=${result.start -1})}" tabindex="-1">Previous</a>
+			</li>
 
-				<li class="page-item" th:if="${result.next}">
-					<a class="page-link" th:href="@{/guestbook/list(page=${result.end +1})}">Next</a>
-				</li>
+			<li th:each="page: ${result.pageList}" th:class="'page-item'+${result.page==page?'active':''}">
+				<a class="page-link" th:href="@{/guestbook/list(page=${page})}">[[${page}]]</a>
+			</li>
 
-			</ul>
+			<li class="page-item" th:if="${result.next}">
+				<a class="page-link" th:href="@{/guestbook/list(page=${result.end +1})}">Next</a>
+			</li>
 
-			<!--등록 처리와 목록 페이지 모달창-->
-			<!-- Modal -->
-			<div class="modal" tabindex="-1" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Modal title</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<p>Modal body text goes here.</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
-						</div>
+		</ul>
+
+		<!--등록 처리와 목록 페이지 모달창-->
+		<!-- Modal -->
+		<div class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
+
+					<div class="modal-body">
+						<p>Modal body text goes here.</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+
 				</div>
 			</div>
-			<!--등록된 뒤 전달되는 msg 확인-->
-			<script th:inline="javascript">
-				const msg = [[${msg}]];
-                console.log(msg);
-                if(msg) {
-                    $(".modal").modal();
-				}
-			</script>
-		</th:block>
+		</div>
+		<!--등록된 뒤 전달되는 msg 확인-->
+		<script th:inline="javascript">
+            const msg = [[${msg}]];
+            console.log(msg);
+            if(msg) {
+                $(".modal").modal();
+            }
+		</script>
 	</th:block>
-</body>
+
+</th:block>
+
 </html>
