@@ -54,7 +54,7 @@
 		<button type="button" class="btn btn-primary modifyBtn">Modify</button>
 
 		<!--목록이동 버튼-->
-		<button type="button" class="btn btn-info">List</button>
+		<button type="button" class="btn btn-info listBtn">List</button>
 
 		<!--삭제 버튼-->
 		<button type="button" class="btn btn-danger removeBtn">Remove</button>
@@ -67,10 +67,24 @@
 
             /*수정 처리*/
 			$(".modifyBtn").click(function (){
-                console.log(`modify`)
+
                 if(confirm("수정하시겠습니까?")) {
                     actionForm.attr("action", "/guestbook/modify").attr("method", "post").submit();
 				}
+
+			})
+
+			/*목록이동 처리*/
+			$(".listBtn").click(() => {
+
+                const pageInfo = $("input[name='page']")
+
+				actionForm.empty() // form 태그의 모든 내용을 지움
+				actionForm.append(pageInfo) // 목록 페이지 이동에 필요한 내용 추가
+				actionForm.attr("action", "/guestbook/list").attr("method", "get")
+
+				// console.log(actionForm.html())
+				actionForm.submit()
 			})
 
 
