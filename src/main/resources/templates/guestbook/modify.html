@@ -39,19 +39,19 @@
 
 			<div class="form-group">
 				<label>RegDate</label>
-				<input type="text" class="form-control" name="regDate" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>  <!-- 수정 불가 -->
+				<input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>  <!-- 수정 불가 -->
 			</div>
 
 			<div class="form-group">
 				<label>ModDate</label>
-				<input type="text" class="form-control" name="modDate" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>  <!-- 수정 불가 (JPA 자동 처리) -->
+				<input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>  <!-- 수정 불가 (JPA 자동 처리) -->
 			</div>
 
 		</form>
 
 
 		<!--수정하기 버튼-->
-		<button type="button" class="btn btn-primary">Modify</button>
+		<button type="button" class="btn btn-primary modifyBtn">Modify</button>
 
 		<!--목록이동 버튼-->
 		<button type="button" class="btn btn-info">List</button>
@@ -59,11 +59,22 @@
 		<!--삭제 버튼-->
 		<button type="button" class="btn btn-danger removeBtn">Remove</button>
 
-		<!--삭제 처리-->
+
+		<!--수정/목록이동/삭제 버튼 처리-->
 		<script th:inline="javascript">
 
             const actionForm = $("form");
 
+            /*수정 처리*/
+			$(".modifyBtn").click(function (){
+                console.log(`modify`)
+                if(confirm("수정하시겠습니까?")) {
+                    actionForm.attr("action", "/guestbook/modify").attr("method", "post").submit();
+				}
+			})
+
+
+            /*삭제 처리*/
             $(".removeBtn").click(function (){
 
                 actionForm.attr("action", "/guestbook/remove").attr("method", "post");
