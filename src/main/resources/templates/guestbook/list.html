@@ -123,14 +123,31 @@
 				</div>
 			</div>
 		</div>
-		<!--등록된 뒤 전달되는 msg 확인-->
+
 		<script th:inline="javascript">
+
+            /*등록된 뒤 전달되는 msg 확인, 모달 처리*/
             const msg = [[${msg}]];
             console.log(msg);
             if(msg) {
                 $(".modal").modal();
             }
+
+            /*검색 버튼 이벤트 처리*/
+			const searchForm = $("#searchForm")
+
+			/*버튼1 검색하기 이벤트 처리*/
+			$('.btn-search').click(() => {
+                searchForm.submit()
+			})
+
+			/*버튼2 검색 내용 초기화 이벤트 처리*/
+            $('.btn-clear').click(() => {
+                searchForm.empty().submit()
+            })
+
 		</script>
+
 	</th:block>
 
 </th:block>
