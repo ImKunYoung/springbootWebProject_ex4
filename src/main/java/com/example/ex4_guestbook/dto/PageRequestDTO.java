@@ -14,10 +14,13 @@ public class PageRequestDTO {
 
     private int page;
     private int size;
+
+    /*검색 처리 1- 서버측 검색 처리*/
     /*검색 조건*/
     private String type;
     /*검색 키워드*/
     private String keyword;
+
 
     public PageRequestDTO() {
         this.page = 1;
