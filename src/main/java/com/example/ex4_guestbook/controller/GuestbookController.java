@@ -43,6 +43,7 @@ public class GuestbookController {
     public void register() {
         log.info("register get...");
     }
+
     /*등록 페이지와 등록 처리 - 등록 처리*/
     @PostMapping("/register")
     public String registerPost(GuestbookDTO dto, RedirectAttributes redirectAttributes) {
